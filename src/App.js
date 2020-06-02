@@ -15,15 +15,26 @@ function App() {
     }
     setMatrix(tempMatrix)
   },[])
+
+  function onClickHandle(row,col){
+    if(!matrix[row][col]){
+      const nextPlayer = currentPlayer === 'x' ? 'o' : 'x';
+      setCurrentPlayer(nextPlayer)
+      const updatedMatrix = [...matrix]
+      updatedMatrix[row][col] = nextPlayer
+      setMatrix(updatedMatrix)
+    }
+
+  }
   return (
     <div className="App">
       <header className="App-header">
        {
          matrix.map((val,col)=>(
            <div className='col'>{
-           val.map(()=>(
-             <div className='row'>
-
+           val.map((value,row)=>(
+             <div className='row' onClick= {()=>{onClickHandle(row,col)}}>
+               {matrix[row][col]}
              </div>
            ))
           }

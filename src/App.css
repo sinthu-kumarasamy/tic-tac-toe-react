@@ -39,6 +39,7 @@
 
 .col{
   font-size: 0px;
+  min-width: 310px;
 }
 
 .row{
@@ -50,4 +51,5 @@
   font-size: 70px;
   text-align: center;
   box-sizing: border-box;
+  vertical-align: middle;
 }
