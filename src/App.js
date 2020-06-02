@@ -3,21 +3,26 @@ import './App.css';
 
 const initialState = [];
 
+
 function App() {
   const [matrix,setMatrix] = useState(initialState);
   const [matrixSize,setMatrixSize] = useState(3);
-  const [currentPlayer,setCurrentPlayer] = useState("o");
+  const [currentPlayer,setCurrentPlayer] = useState('o');
   const [selectedRow,setSelectedRow] = useState(null);
   const [selectedCol,setSelectedCol] = useState(null);
   const [winner,setWinner] = useState(false);
+  const [reset,setReset] = useState(false)
   useEffect(()=>{
+    setWinner(false)
+    setSelectedCol(null)
+    setSelectedRow(null)
     const row = new Array(matrixSize).fill(null);
     const tempMatrix = [];
     for(let i=0;i<matrixSize;i++){
       tempMatrix.push([...row])
     }
     setMatrix(tempMatrix)
-  },[])
+  },[reset])
 
   function onClickHandle(row,col){
     if(!matrix[row][col] && !winner){
@@ -54,19 +59,24 @@ function App() {
     }
     if(horizontal || vertical || diagonal1 || diagonal2){setWinner(true)}
   }
+  function resetGameHandle(){
+    setReset(!reset)
+  }
   useEffect(()=>{
     if(!winner){
       isWinner();
     }
   })
+  
   return (
     <div className="App">
       <header className="App-header">
+        <button onClick={resetGameHandle}>Reset Game</button>
        {
          matrix.map((val,col)=>(
-           <div className='col'>{
+           <div className='col' key={col}>{
            val.map((value,row)=>(
-             <div className='row' onClick= {()=>{onClickHandle(row,col)}}>
+             <div className='row' key={row} onClick= {()=>{onClickHandle(row,col)}}>
                {matrix[row][col]}
              </div>
            ))
